@@ -72,7 +72,7 @@ def readColmapCameras(cam_extrinsics, cam_intrinsics, depths_params, images_fold
     for idx, key in enumerate(cam_extrinsics):
         sys.stdout.write('\r')
         # the exact output you're looking for:
-        sys.stdout.write("Reading camera {}/{}".format(idx+1, len(cam_extrinsics)))
+        sys.stdout.write(f"Reading camera {idx+1}/{len(cam_extrinsics)}\n")
         sys.stdout.flush()
 
         extr = cam_extrinsics[key]
@@ -83,6 +83,10 @@ def readColmapCameras(cam_extrinsics, cam_intrinsics, depths_params, images_fold
         uid = intr.id
         R = np.transpose(qvec2rotmat(extr.qvec))
         T = np.array(extr.tvec)
+
+        print(f'img name: {extr.name}, cam model: {intr.model}')
+        print(f'Image size: {width}x{height}')
+        print(f'Params: {intr.params}')
 
         if intr.model=="SIMPLE_PINHOLE":
             focal_length_x = intr.params[0]
